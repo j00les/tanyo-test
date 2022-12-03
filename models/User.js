@@ -7,9 +7,11 @@ module.exports = class User {
   static async seedUser() {
     try {
       const hashed = users.map(user => {
-        passHash(user.password);
+        return {
+          email: user.email,
+          password: passHash(user.password),
+        };
       });
-
       await user.insertMany(hashed, { ordered: true });
     } catch (error) {
       throw error;

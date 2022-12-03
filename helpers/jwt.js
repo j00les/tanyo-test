@@ -6,17 +6,25 @@ const tokenVerify = token => jwt.verify(token, secretKey);
 
 module.exports = { tokenSign, tokenVerify };
 
-// app.post('/register', async (req, res, next) => {
+// app.post('/login', async (req, res, next) => {
 //   try {
 //     const { email, password } = req.body;
-//     const response = await User.create({
-//       email,
-//       password,
-//     });
 
-//     res.status(201).json({
-//       id: response.id,
-//       email: response.email,
+//     const findUser = await User.findOne({ where: { email } });
+//     if (!findUser) throw { name: 'Unauthorized' };
+
+//     const isValid = passCompare(password, findUser.password);
+//     if (!isValid) throw { name: 'Unauthorized' };
+
+//     const payload = {
+//       id: findUser.id,
+//       email: findUser.email,
+//     };
+
+//     const access_token = tokenSign(payload);
+
+//     res.status(200).json({
+//       access_token,
 //     });
 //   } catch (err) {
 //     next(err);

@@ -1,4 +1,5 @@
-const { passHash } = require("../helpers/bcrypt");
+const { passHash, passCompare } = require("../helpers/bcrypt");
+const { tokenSign } = require("../helpers/jwt");
 const User = require("../models/User");
 
 module.exports = class UserController {
@@ -24,11 +25,34 @@ module.exports = class UserController {
 
       const hashed = passHash(password);
 
-      const data = await User.create({ email, hashed });
+      const data = await User.create({ email, password: hashed });
 
       res.status(201).json({
         _id: data._id,
         email: data.email,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async login(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const findUser = await User.findOne({ email });
+      if (!findUser) throw { name: "Unauthorized" };
+
+      const isValid = passCompare(password, findUser.password);
+      if (!isValid) throw { name: "Unauthorized" };
+
+      const payload = {
+        _id: findUser._id,
+        email: findUser.email,
+      };
+      const access_token = tokenSign(payload);
+      console.log(access_token);
+      res.status(200).json({
+        access_token,
       });
     } catch (error) {
       console.log(error);
