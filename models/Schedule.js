@@ -23,7 +23,6 @@ module.exports = class Schedule {
     try {
       // console.log(body);
       const cursor = await schedule.find({ userId: body._id });
-
       const data = await cursor.toArray();
       return data;
     } catch (error) {
