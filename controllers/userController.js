@@ -10,29 +10,28 @@ module.exports = class UserController {
         message: "User seeding succeed",
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
   static async register(req, res, next) {
     try {
       const { email, password } = req.body;
-      if (!email) throw { name: "Email is required" };
-      if (!password) throw { name: "Password is required" };
+      if (!email) throw { name: "Empty Field Email" };
+      if (!password) throw { name: "Empty Field Passsword" };
 
       const userData = await User.findOne({ email });
-      if (userData) throw { name: "Email must be unique!" };
+      if (userData) throw { name: "Unique Constraint" };
 
       const hashed = passHash(password);
 
-      const data = await User.create({ email, password: hashed });
+      await User.create({ email, password: hashed });
 
       res.status(201).json({
-        _id: data._id,
-        email: data.email,
+        message: "Register success",
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -50,12 +49,12 @@ module.exports = class UserController {
         email: findUser.email,
       };
       const access_token = tokenSign(payload);
-      console.log(access_token);
+
       res.status(200).json({
         access_token,
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 };

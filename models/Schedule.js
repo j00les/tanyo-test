@@ -21,7 +21,6 @@ module.exports = class Schedule {
 
   static async findAll(body) {
     try {
-      // console.log(body);
       const cursor = await schedule.find({ userId: body._id });
       const data = await cursor.toArray();
       return data;

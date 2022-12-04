@@ -24,11 +24,11 @@ module.exports = class User {
       if (!payload._id) {
         const data = await user.findOne(payload);
         return data;
+      } else {
+        const id = new ObjectId(payload._id);
+        const data = await user.findOne({ _id: id });
+        return data;
       }
-
-      const id = new ObjectId(payload._id);
-      const data = await user.findOne({ _id: id });
-      return data;
     } catch (error) {
       throw error;
     }
@@ -36,9 +36,9 @@ module.exports = class User {
 
   static async create(payload) {
     try {
-      // const create = await user.insertOne(payload);
-      // const data = await user.findOne(create.insertedId);
-      // return data;
+      const create = await user.insertOne(payload);
+      const data = await user.findOne(create.insertedId);
+      return data;
     } catch (error) {
       throw error;
     }

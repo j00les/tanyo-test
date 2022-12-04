@@ -8,7 +8,7 @@ module.exports = class ScheduleController {
         message: "Schedule seeding succeed",
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -31,7 +31,7 @@ module.exports = class ScheduleController {
         message: "Schedule succesfully created",
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -41,7 +41,7 @@ module.exports = class ScheduleController {
       const data = await Schedule.findAll({ _id });
       res.status(200).json(data);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 };
