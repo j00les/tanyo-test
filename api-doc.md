@@ -5,7 +5,7 @@ List of available endpoints:
 - `POST /users/seed`
 - `POST /users/register`
 - `POST /users/login`
-- `POST /sschedules/seed`
+- `POST /schedules/seed`
 - `POST /schedules/create`
 - `GET /schedules/data`
 
