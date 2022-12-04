@@ -8,5 +8,25 @@
       "email": "user2@mail.com",
       "password": "user123"
     }
+  ],
+  "schedules": [
+    {
+      "from": "2022-12-04",
+      "to": "2022-12-07",
+      "time": "08.00",
+      "repeat": "monthly",
+      "duration": "15 minutes",
+      "userId": "638bb896277e6f921fe7e316",
+      "consultType": "chat"
+    },
+    {
+      "from": "2022-12-08",
+      "to": "2022-12-22",
+      "time": "08.00",
+      "repeat": "no",
+      "duration": "15 minutes",
+      "userId": "638bb896277e6f921fe7e316",
+      "consultType": "video call"
+    }
   ]
 }

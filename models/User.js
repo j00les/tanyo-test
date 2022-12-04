@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const db = require("../config/config");
 const { users } = require("../db/data.json");
 const { passHash } = require("../helpers/bcrypt");
@@ -20,7 +21,13 @@ module.exports = class User {
 
   static async findOne(payload) {
     try {
-      const data = await user.findOne(payload);
+      if (!payload._id) {
+        const data = await user.findOne(payload);
+        return data;
+      }
+
+      const id = new ObjectId(payload._id);
+      const data = await user.findOne({ _id: id });
       return data;
     } catch (error) {
       throw error;
@@ -29,10 +36,9 @@ module.exports = class User {
 
   static async create(payload) {
     try {
-      const create = await user.insertOne(payload);
-      const data = await user.findOne(create.insertedId);
-
-      return data;
+      // const create = await user.insertOne(payload);
+      // const data = await user.findOne(create.insertedId);
+      // return data;
     } catch (error) {
       throw error;
     }
